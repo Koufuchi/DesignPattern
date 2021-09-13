@@ -1,0 +1,60 @@
+
+工廠模式
+
+    1. 比較:
+
+        簡單工廠：只有一個具體工廠類來創建一種父類別的多個不同子類別
+
+        工廠方法：多個派生於一個父類別的具體工廠類，每個具體工廠只生產一種父類別的一個子類別(產品類的增長，垂直增長)
+
+        抽象工廠：也是只有一個工廠基類，但是每個具體工廠生產多個相關父類別的一個子類別(產品線的增長，水平增長)
+
+        人類----蟲族----(產品線增長 抽象工廠)
+         |       |
+        工人    工人
+         |       |
+        士兵    士兵
+         |       |
+        飛機    飛機
+         |
+        (產品線增長 工廠方法)
+
+    2. 好處:
+
+        (1)
+            如果有個 class Person, 他的 construct 被修改了，例如: $person = new Person(); 改為 $person = new Person('Hank')，
+            若在很多地方都有 person 物件，就要一個個去修改。
+            但假使用工廠模式，產生物件就是: 
+
+                $factory = new PersonFactory();
+                $person = $factory->createObj();
+
+            這樣只要去改 PersonFactory 的 createObj() 就好，不會動到 client 端。
+
+        (2)
+            如果今天所有 Person 物件都要改成 Plant 物件，我們只要改變一開始工廠的物件，
+            例如: $factory = new PersonFactory() 改為 $factory = new PlantFactory()，
+            那 $factory->createObj() 就會生產植物物件出來，最小化的減少 client 端的變動。
+
+生成器模式
+
+    與抽象工廠比較:
+
+        抽象工廠 : 強調一系列的產品(包含簡單或複雜的)
+        生成器模式 : 一步步構件複雜的產品 
+
+        抽象工廠 : 專注於製造「什麼產品」
+        生成器模式 : 專注於產品「如何製造」
+
+        抽象工廠 : 專注於定義許多不同類型的工廠來構建許多產品，且一個 builder 並非只建立一個 product
+        生成器模式 : 只專心建造一個複雜的 product 
+
+        抽象工廠 : *Every* method call creates and returns different objects
+        生成器模式 : Only the *last* method call returns the object, while other calls partially build the object
+
+        與抽象工廠相比，生成器模式返回一個組裝好的完整產品，而抽象工廠返回一系列相關的產品，這些產品位於不同的產品等級結構，構成了一個產品族。
+
+        在抽象工廠中，用戶端實例化工廠類，然後調用工廠方法獲取所需產品物件，而在生成器模式中，用戶端可以不直接調用生成器模式的相關方法，
+        而是通過 Director 來指導如何生成物件，包括物件的組裝過程和建造步驟，它側重於一步步構造一個複雜物件，返回一個完整的物件。
+
+        如果將抽象工廠看成汽車配件生產工廠，生產一個產品族的產品，那麼 Builder 就是一個汽車組裝工廠，通過對部件的組裝可以返回一輛完整的汽車。 
